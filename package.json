@@ -2,7 +2,7 @@
   "name": "window-colors-replica",
   "displayName": "Window Colors Replica",
   "description": "Gives each workspace window a unique color in the title bar and activity bar, derived from the folder path.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "publisher": "local",
   "license": "MIT",
   "engines": {
