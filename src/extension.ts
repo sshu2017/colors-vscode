@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { hueFromHex, paletteFor, randomHue, WindowPalette } from './color';
+import { hueFromHex, hueFromPath, paletteFor, WindowPalette } from './color';
 
 const COLOR_KEYS = [
   'activityBar.background',
@@ -68,9 +68,10 @@ function refresh(): void {
       setPalette(paletteFor(hue, isLight() ? 'light' : 'dark'));
     }
   } else {
-    // First time this folder is colored: roll a random color and persist it in
-    // the workspace settings so it stays stable across reloads.
-    setPalette(paletteFor(randomHue(), isLight() ? 'light' : 'dark'));
+    // First time this folder is colored: derive a deterministic color from the folder
+    // path and persist it in the workspace settings so it stays stable across reloads.
+    const hue = hueFromPath(folder.uri.fsPath);
+    setPalette(paletteFor(hue, isLight() ? 'light' : 'dark'));
   }
 }
 

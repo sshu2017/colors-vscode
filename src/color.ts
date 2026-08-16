@@ -52,6 +52,17 @@ export function randomHue(): number {
   return Math.floor(Math.random() * 360);
 }
 
+// Generate a deterministic hue from a folder path using a hash function.
+// Same path always produces the same hue, different paths spread across the spectrum.
+export function hueFromPath(folderPath: string): number {
+  let hash = 0;
+  for (let i = 0; i < folderPath.length; i++) {
+    hash = ((hash << 5) - hash) + folderPath.charCodeAt(i);
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash) % 360;
+}
+
 function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
   const match = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
   if (!match) {
